@@ -1,24 +1,33 @@
-var pump = require('pump');
+const pump = require('pump');
 
-var gulp = require('gulp');
-var mocha = require('gulp-mocha');
-var gutil = require('gulp-util');
-var uglify = require('gulp-uglify');
-var insert = require('gulp-insert');
+const gulp = require('gulp');
+const mocha = require('gulp-mocha');
+const gutil = require('gulp-util');
+const uglify = require('gulp-uglify');
+const insert = require('gulp-insert');
+const rename = require('gulp-rename');
+const babel = require('gulp-babel');
 
-gulp.task('build', function(cb) {
+gulp.task('transpile', () => gulp.src('src/*.js')
+    .pipe(babel({
+        presets: ['es2015']
+    }))
+    .pipe(gulp.dest('dist'))
+);
+
+gulp.task('build', ['transpile'], (cb) => {
     pump([
-            gulp.src('src/*.js'),
+            gulp.src(['dist/*.js', '!dist/*min.js']),
             uglify(),
             insert.prepend('/*! json2caml v1.0.0 | (c) Niklas Engblom | MIT License */\n'),
+            rename({suffix: '.min'}),
             gulp.dest('dist')
         ],
         cb
     );
 });
 
-gulp.task('test', function() {
-    return gulp.src(['test/test.js'], { read: false })
-        .pipe(mocha({ reporter: 'spec' }))
-        .on('error', gutil.log);
-});
+gulp.task('test', () => gulp.src(['test/test.js'], { read: false })
+    .pipe(mocha({ reporter: 'spec' }))
+    .on('error', gutil.log)
+);

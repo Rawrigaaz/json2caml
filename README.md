@@ -14,7 +14,7 @@ var json2caml = require('json2caml');
 ```
 
 ### Include as standalone js file
-Get from Github: [minified](dist/json2caml.js) or [full](src/json2caml.js)
+Get from Github: [minified](dist/json2caml.min.js) or [full](dist/json2caml.js)
 ```
 <script src="/path/to/json2caml.js"></script>
 ```

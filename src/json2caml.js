@@ -115,12 +115,7 @@
                     '<In>',
                         getFieldRef({name: getPropertyValue('name', obj)}),
                         '<Values>',
-                            getPropertyValue('values', obj).map(function(v) {
-                                return getValueNode({
-                                    type: type,
-                                    value: v
-                                });
-                            }).join(''),
+                            getPropertyValue('values', obj).map(value => getValueNode({ type: type, value: value })).join(''),
                         '</Values>',
                     '</In>'
                 );
@@ -147,9 +142,7 @@
             case 'daterangesoverlap':
                 nodeCaml = ''.concat(
                     '<DateRangesOverlap>',
-                        getPropertyValue('fieldRefs', obj).map(function(v) {
-                            return getFieldRef({name: v});
-                        }).join(''),
+                        getPropertyValue('fieldRefs', obj).map(value => getFieldRef({name: value})).join(''),
                         getValueNode({type: 'DateTime', value: 'Now'}),
                     '</DateRangesOverlap>'
                 );
@@ -228,7 +221,7 @@
         //convert camel case to pascal case for all attributes
         return ''.concat(
             '<', options.nodeName, ' ',
-                Object.keys(options).map(function(key) {
+                Object.keys(options).map((key) => {
                     if(key == 'nodeName' || key == 'closeTag') return '';
 
                     return ''.concat(key.charAt(0).toUpperCase(), key.substr(1), '="', options[key], '" ');
@@ -238,9 +231,7 @@
     }
 
     function getPropertyValue(property, object) {
-        var keys = Object.keys(object).filter(function(key) {
-            return key.toLowerCase() == property.toLowerCase();
-        });
+        var keys = Object.keys(object).filter(key => key.toLowerCase() == property.toLowerCase());
 
         return keys.length ? object[keys[0]] : undefined;
     }
