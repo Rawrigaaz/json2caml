@@ -1,6 +1,6 @@
 {
   "name": "json2caml",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Convert JSON to CAML",
   "main": "./src/json2caml.js",
   "directories": {

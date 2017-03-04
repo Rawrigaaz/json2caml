@@ -77,8 +77,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         var where = getPropertyValue('where', query);
-        camlQuery = camlQuery.replace('{query}', '<Where>{query}</Where>');
-        return camlQuery.replace('{query}', getCamlNode(where));
+        if (where) {
+            camlQuery = camlQuery.replace('{query}', '<Where>' + getCamlNode(where) + '</Where>');
+        } else {
+            camlQuery = camlQuery.replace('{query}', '');
+        }
+
+        return camlQuery;
     }
 
     function getCamlNode(obj) {
@@ -186,10 +191,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     function getStartTag(options) {
-        //convert camel case to pascal case for all attributes
         return ''.concat('<', options.nodeName, ' ', Object.keys(options).map(function (key) {
             if (key == 'nodeName' || key == 'closeTag') return '';
-
+            //convert camel case to pascal case for all attributes
             return ''.concat(key.charAt(0).toUpperCase(), key.substr(1), '="', options[key], '" ');
         }).join(''), options.closeTag ? '/>' : '');
     }
