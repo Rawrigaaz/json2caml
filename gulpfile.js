@@ -1,4 +1,5 @@
 const pump = require('pump');
+const packageJson = require('./package.json');
 
 const gulp = require('gulp');
 const mocha = require('gulp-mocha');
@@ -12,6 +13,7 @@ gulp.task('transpile', () => gulp.src('src/*.js')
     .pipe(babel({
         presets: ['es2015']
     }))
+    .pipe(insert.prepend('/*! json2caml v'+packageJson.version+' */\n'))
     .pipe(gulp.dest('dist'))
 );
 
@@ -19,7 +21,7 @@ gulp.task('build', ['transpile'], (cb) => {
     pump([
             gulp.src(['dist/*.js', '!dist/*min.js']),
             uglify(),
-            insert.prepend('/*! json2caml v1.0.0 | (c) Niklas Engblom | MIT License */\n'),
+            insert.prepend('/*! json2caml v'+packageJson.version+' | (c) Niklas Engblom | MIT License */\n'),
             rename({suffix: '.min'}),
             gulp.dest('dist')
         ],

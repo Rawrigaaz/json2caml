@@ -2,6 +2,10 @@
   "name": "json2caml",
   "version": "0.9.1",
   "description": "Convert JSON to CAML",
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/niklas-e/json2caml.git"
+  },
   "main": "./src/json2caml.js",
   "directories": {
     "test": "test"
