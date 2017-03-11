@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/niklas-e/json2caml.git"
   },
-  "main": "./src/json2caml.js",
+  "main": "./dist/json2caml.min.js",
   "directories": {
     "test": "test"
   },
