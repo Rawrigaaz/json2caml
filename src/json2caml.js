@@ -29,11 +29,15 @@
         window.json2caml = json2caml;
     }
 
-    function json2caml(object) {
+    function json2caml(object, options) {
         if(!object || typeof object != 'object' || object instanceof Array) {
             console.error('jsonToCaml only accepts object as a paramter.');
             return undefined;
         }
+
+        options = Object.assign({
+            includeViewAndQuery: true
+        }, options);
 
         var query = object;
 
@@ -49,7 +53,7 @@
         }
 
         var currentNode;
-        var camlQuery = '<View><Query>{query}</Query></View>'
+        var camlQuery = '';
 
         var orderBy = getPropertyValue('orderBy', query);
         if(orderBy) {
@@ -75,18 +79,15 @@
                 '</OrderBy>'
             );
 
-            camlQuery = camlQuery.replace('{query}', orderByCaml + '{query}');
+            camlQuery += orderByCaml;
         }
 
         var where = getPropertyValue('where', query);
         if(where) {
-            camlQuery = camlQuery.replace('{query}', '<Where>' + getCamlNode(where) + '</Where>');
-        }
-        else {
-            camlQuery = camlQuery.replace('{query}', '');
+            camlQuery += '<Where>' + getCamlNode(where) + '</Where>';
         }
         
-        return camlQuery;
+        return options.includeViewAndQuery ? ('<View><Query>' + camlQuery + '</Query></View>') : camlQuery;
     }
 
     function getCamlNode(obj) {

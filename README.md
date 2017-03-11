@@ -51,6 +51,15 @@ var camlQuery = json2caml(query);
 
 Note that most of the CAML specific properties and values (operators, types, orderby/where) are case-insensitive so you can use camel case or pascal case or whatever else you fancy.
 
+### Options
+json2caml accepts second parameter for options. All available options are listed below.
+
+Example: `json2caml(query, { includeViewAndQuery: false })`
+
+| Option              | Default value |
+| ------------------- | ------------- |
+| includeViewAndQuery | true          |
+
 ## Contributing
 
 1. Fork it!

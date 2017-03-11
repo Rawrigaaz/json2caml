@@ -1,6 +1,6 @@
 {
   "name": "json2caml",
-  "version": "0.9.3",
+  "version": "0.10.0",
   "description": "Convert JSON to CAML",
   "repository": {
     "type": "git",
